@@ -4,11 +4,17 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 
-app.post('/api/message', function(req,res){ //as an endpoint for the app, to recieve request/response for every posted message as a success from back-end with this function
+app.use(function(req, res, next){
+res.header("Access-Control-Allow-Origin", "*");
+res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+next(); //use this method to not break middleware block chain
+});
+
+app.post('/api/message', function (req, res) { //as an endpoint for the app, to recieve request/response for every posted message as a success from back-end with this function
     console.log(req.body);
     res.status(200); //status 200 = message posted
-}) 
+})
 
-var server = app.listen(5000, function(){
-console.log('listening on port', server.address().port);
+var server = app.listen(5000, function () {
+    console.log('listening on port', server.address().port);
 })
